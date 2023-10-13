@@ -4,7 +4,7 @@ from threading import Thread
 nick = input('Please enter a nickname: ')
 
 client = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-ip_address = '127.0.0.1'
+ip_address = '192.168.1.247'
 port = 8000
 client.connect((ip_address,port))
 print('connected')

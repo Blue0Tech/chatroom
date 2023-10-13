@@ -8,6 +8,8 @@ def clientthread(conn,addr,nickname):
             message = conn.recv(2048).decode('utf-8')
             if(message):
                 print(message)
+                with open('log.txt','a') as f:
+                    f.write(message+'\n')
                 broadcast(message,conn)
             else:
                 remove(conn)
@@ -29,8 +31,8 @@ def remove_nickname(nickname):
         nicks.remove(nickname)
 
 server = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-ip_address = '127.0.0.1'
-port = 8000
+ip_address = '192.168.1.247'
+port = 8001
 
 server.bind((ip_address,port))
 server.listen()
@@ -41,7 +43,10 @@ print('Server is live')
 
 while(True):
     conn,addr = server.accept()
-    nickname = conn.recv(2048).decode('utf-8')
+    nickname = ''
+    try:
+        nickname = conn.recv(2048).decode('utf-8')
+    except: pass
     clients.append(conn)
     nicks.append(nickname)
     msg = '{} joined'.format(nickname)
